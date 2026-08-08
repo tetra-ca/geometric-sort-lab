@@ -1,0 +1,20 @@
+sortlab — geometric (radix/SIMD) vs scalar (comparator) sort
+isa=neon vector_lanes=2 pointer=64b
+
+=== presortedness — pdqsort detects runs; a radix does not care
+contender              config                              n        ns/op      ns/elem      Melem/s       B/op   allocs  passes
+------------------------------------------------------------------------------------------------------------------------------
+std::sort_perm         random                             1M     66226625       66.227         15.1          0        0     0.0
+std::stable_perm       random                             1M     76417542       76.418         13.1    4000000        1     0.0
+radix_carry            random                             1M      9151791        9.152        109.3          0        0     8.0
+std::sort_perm         sorted                             1M      1225834        1.226        815.8          0        0     0.0
+std::stable_perm       sorted                             1M      7992208        7.992        125.1    4000000        1     0.0
+radix_carry            sorted                             1M      9076958        9.077        110.2          0        0     8.0
+std::sort_perm         reverse                            1M      1843459        1.843        542.5          0        0     0.0
+std::stable_perm       reverse                            1M     34490375       34.490         29.0    4000000        1     0.0
+radix_carry            reverse                            1M      9482834        9.483        105.5          0        0     8.0
+std::sort_perm         99pct                              1M      9380000        9.380        106.6          0        0     0.0
+std::stable_perm       99pct                              1M     15484791       15.485         64.6    4000000        1     0.0
+radix_carry            99pct                              1M      9357458        9.357        106.9          0        0     8.0
+
+wrote results/presort.csv (12 rows)

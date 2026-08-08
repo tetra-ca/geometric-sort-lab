@@ -1,0 +1,28 @@
+sortlab — geometric (radix/SIMD) vs scalar (comparator) sort
+isa=neon vector_lanes=2 pointer=64b
+
+=== entropy — bits of key in use decide the pass count, n does not
+contender              config                              n        ns/op      ns/elem      Melem/s       B/op   allocs  passes
+------------------------------------------------------------------------------------------------------------------------------
+std::sort_perm         e64/random                         1M     66937791       66.938         14.9          0        0     0.0
+radix_gather           e64/random                         1M     10280708       10.281         97.3          0        0     8.0
+radix_carry            e64/random                         1M      9247833        9.248        108.1          0        0     8.0
+radix_prehist          e64/random                         1M      9231791        9.232        108.3          0        0     8.0
+std::sort_perm         e32/random                         1M     67104292       67.104         14.9          0        0     0.0
+radix_gather           e32/random                         1M      5005292        5.005        199.8          0        0     4.0
+radix_carry            e32/random                         1M      4860959        4.861        205.7          0        0     4.0
+radix_prehist          e32/random                         1M      4806541        4.807        208.0          0        0     4.0
+std::sort_perm         e24/random                         1M     67645083       67.645         14.8          0        0     0.0
+radix_gather           e24/random                         1M      3698625        3.699        270.4          0        0     3.0
+radix_carry            e24/random                         1M      3793125        3.793        263.6          0        0     3.0
+radix_prehist          e24/random                         1M      3746250        3.746        266.9          0        0     3.0
+std::sort_perm         e8/random                          1M     31377583       31.378         31.9          0        0     0.0
+radix_gather           e8/random                          1M      1124250        1.124        889.5          0        0     1.0
+radix_carry            e8/random                          1M      1603500        1.603        623.6          0        0     1.0
+radix_prehist          e8/random                          1M      1617375        1.617        618.3          0        0     1.0
+std::sort_perm         eq/random                          1M      1164541        1.165        858.7          0        0     0.0
+radix_gather           eq/random                          1M       127750        0.128       7827.8          0        0     0.0
+radix_carry            eq/random                          1M       119375        0.119       8377.0          0        0     0.0
+radix_prehist          eq/random                          1M       120625        0.121       8290.2          0        0     0.0
+
+wrote results/entropy.csv (20 rows)

@@ -1,0 +1,17 @@
+sortlab — geometric (radix/SIMD) vs scalar (comparator) sort
+isa=neon vector_lanes=2 pointer=64b
+
+=== payload — moved log n times by a comparator, or moved once by a gather
+contender              config                              n        ns/op      ns/elem      Melem/s       B/op   allocs  passes
+------------------------------------------------------------------------------------------------------------------------------
+gather_only            8B                                 1M       529459        0.529       1888.7          0        0     0.0
+radix_then_gather      8B                                 1M     10088500       10.088         99.1          0        0     0.0
+std::sort_rows         8B                                 1M     40115292       40.115         24.9          0        0     0.0
+gather_only            32B                                1M      2912709        2.913        343.3          0        0     0.0
+radix_then_gather      32B                                1M     12619792       12.620         79.2          0        0     0.0
+std::sort_rows         32B                                1M     43843583       43.844         22.8          0        0     0.0
+gather_only            128B                               1M     19736917       19.737         50.7          0        0     0.0
+radix_then_gather      128B                               1M     29146166       29.146         34.3          0        0     0.0
+std::sort_rows         128B                               1M     59774583       59.775         16.7          0        0     0.0
+
+wrote results/payload.csv (9 rows)

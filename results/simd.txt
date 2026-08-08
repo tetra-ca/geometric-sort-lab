@@ -1,0 +1,16 @@
+sortlab — geometric (radix/SIMD) vs scalar (comparator) sort
+isa=neon vector_lanes=2 pointer=64b
+
+=== simd — the two steps the vector unit actually owns
+contender              config                              n        ns/op      ns/elem      Melem/s       B/op   allocs  passes
+------------------------------------------------------------------------------------------------------------------------------
+vary_novec             stride1                            1M       255500        0.256       3913.9          0        0     0.0
+vary_autovec           stride1                            1M        67417        0.067      14833.1          0        0     0.0
+vary_neon              stride1                            1M        64250        0.064      15564.2          0        0     0.0
+vary_novec             stride4                            1M       377542        0.378       2648.7          0        0     0.0
+vary_autovec           stride4                            1M       436583        0.437       2290.5          0        0     0.0
+vary_neon              stride4                            1M       405458        0.405       2466.3          0        0     0.0
+encode_novec           i64                                1M       243750        0.244       4102.6          0        0     0.0
+encode_neon            i64                                1M       118208        0.118       8459.7          0        0     0.0
+
+wrote results/simd.csv (8 rows)

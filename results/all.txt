@@ -1,0 +1,284 @@
+date:     2026-08-08T13:42:41Z
+uname:    Darwin 24.6.0 arm64
+cpu:      Apple M4
+cores:    10 physical / 10 logical
+l1d:      131072
+l2:       16777216
+line:     128
+page:     16384
+memory:   17179869184
+compiler: Apple clang version 17.0.0 (clang-1700.0.13.3)
+sortlab — geometric (radix/SIMD) vs scalar (comparator) sort
+isa=neon vector_lanes=2 pointer=64b
+
+=== scale — n, single 64-bit lane, random keys, permutation out
+contender              config                              n        ns/op      ns/elem      Melem/s       B/op   allocs  passes
+------------------------------------------------------------------------------------------------------------------------------
+std::sort_direct       e64/random                         16           34        2.101        476.1          0        0     0.0
+std::sort_perm         e64/random                         16           66        4.110        243.3          0        0     0.0
+std::stable_perm       e64/random                         16           65        4.079        245.1          0        0     0.0
+insertion_perm         e64/random                         16           48        2.991        334.4          0        0     0.0
+radix_gather           e64/random                         16          702       43.900         22.8          0        0     8.0
+radix_carry            e64/random                         16          707       44.179         22.6          0        0     8.0
+radix_prehist          e64/random                         16          900       56.239         17.8          0        0     8.0
+radix_carry_alloc      e64/random                         16          984       61.513         16.3        472       10     8.0
+std::sort_direct       e64/random                         64          156        2.441        409.6          0        0     0.0
+std::sort_perm         e64/random                         64          308        4.818        207.6          0        0     0.0
+std::stable_perm       e64/random                         64          755       11.795         84.8          0        0     0.0
+insertion_perm         e64/random                         64          522        8.160        122.6          0        0     0.0
+radix_gather           e64/random                         64          986       15.414         64.9          0        0     8.0
+radix_carry            e64/random                         64          971       15.171         65.9          0        0     8.0
+radix_prehist          e64/random                         64         1014       15.839         63.1          0        0     8.0
+radix_carry_alloc      e64/random                         64         1375       21.491         46.5       1480       10     8.0
+std::sort_direct       e64/random                        128          332        2.592        385.8          0        0     0.0
+std::sort_perm         e64/random                        128          698        5.456        183.3          0        0     0.0
+std::stable_perm       e64/random                        128         3817       29.822         33.5          0        0     0.0
+insertion_perm         e64/random                        128         2756       21.528         46.5          0        0     0.0
+radix_gather           e64/random                        128         1457       11.379         87.9          0        0     8.0
+radix_carry            e64/random                        128         1403       10.964         91.2          0        0     8.0
+radix_prehist          e64/random                        128         1487       11.614         86.1          0        0     8.0
+radix_carry_alloc      e64/random                        128         1751       13.678         73.1       2824       10     8.0
+std::sort_direct       e64/random                        256          804        3.142        318.3          0        0     0.0
+std::sort_perm         e64/random                        256         1839        7.185        139.2          0        0     0.0
+std::stable_perm       e64/random                        256         4372       17.076         58.6       1024        1     0.0
+insertion_perm         e64/random                        256         9495       37.090         27.0          0        0     0.0
+radix_gather           e64/random                        256         2245        8.770        114.0          0        0     8.0
+radix_carry            e64/random                        256         2213        8.645        115.7          0        0     8.0
+radix_prehist          e64/random                        256         2204        8.608        116.2          0        0     8.0
+radix_carry_alloc      e64/random                        256         2589       10.113         98.9       5512       10     8.0
+std::sort_direct       e64/random                       1024         4709        4.599        217.4          0        0     0.0
+std::sort_perm         e64/random                       1024         9647        9.421        106.1          0        0     0.0
+std::stable_perm       e64/random                       1024        20137       19.665         50.9       4096        1     0.0
+insertion_perm         e64/random                       1024       141071      137.765          7.3          0        0     0.0
+radix_gather           e64/random                       1024         7397        7.223        138.4          0        0     8.0
+radix_carry            e64/random                       1024         7022        6.857        145.8          0        0     8.0
+radix_prehist          e64/random                       1024         7047        6.882        145.3          0        0     8.0
+radix_carry_alloc      e64/random                       1024         7376        7.203        138.8      21640       10     8.0
+std::sort_direct       e64/random                        10K       173294       17.329         57.7          0        0     0.0
+std::sort_perm         e64/random                        10K       163925       16.392         61.0          0        0     0.0
+std::stable_perm       e64/random                        10K       257506       25.751         38.8      40000        1     0.0
+radix_gather           e64/random                        10K        84369        8.437        118.5          0        0     8.0
+radix_carry            e64/random                        10K        77940        7.794        128.3          0        0     8.0
+radix_prehist          e64/random                        10K        77175        7.718        129.6          0        0     8.0
+radix_carry_alloc      e64/random                        10K        83567        8.357        119.7     210136       10     8.0
+std::sort_direct       e64/random                       100K      3195730       31.957         31.3          0        0     0.0
+std::sort_perm         e64/random                       100K      5088417       50.884         19.7          0        0     0.0
+std::stable_perm       e64/random                       100K      6523542       65.235         15.3     400000        1     0.0
+radix_gather           e64/random                       100K       863896        8.639        115.8          0        0     8.0
+radix_carry            e64/random                       100K       750458        7.505        133.3          0        0     8.0
+radix_prehist          e64/random                       100K       738125        7.381        135.5          0        0     8.0
+radix_carry_alloc      e64/random                       100K       806812        8.068        123.9    2100136       10     8.0
+std::sort_direct       e64/random                         1M     40873167       40.873         24.5          0        0     0.0
+std::sort_perm         e64/random                         1M     67346833       67.347         14.8          0        0     0.0
+std::stable_perm       e64/random                         1M     81964459       81.964         12.2    4000000        1     0.0
+radix_gather           e64/random                         1M     11328209       11.328         88.3          0        0     8.0
+radix_carry            e64/random                         1M      9524042        9.524        105.0          0        0     8.0
+radix_prehist          e64/random                         1M     10114834       10.115         98.9          0        0     8.0
+radix_carry_alloc      e64/random                         1M     16770416       16.770         59.6   21000136       10     8.0
+std::sort_direct       e64/random                        10M    547002084       54.700         18.3          0        0     0.0
+std::sort_perm         e64/random                        10M   1007890625      100.789          9.9          0        0     0.0
+std::stable_perm       e64/random                        10M   1111553291      111.155          9.0   40000000        1     0.0
+radix_gather           e64/random                        10M    438983709       43.898         22.8          0        0     8.0
+radix_carry            e64/random                        10M     95279792        9.528        105.0          0        0     8.0
+radix_prehist          e64/random                        10M     95577375        9.558        104.6          0        0     8.0
+radix_carry_alloc      e64/random                        10M    107110834       10.711         93.4  210000136       10     8.0
+
+wrote results/scale.csv (68 rows)
+sortlab — geometric (radix/SIMD) vs scalar (comparator) sort
+isa=neon vector_lanes=2 pointer=64b
+
+=== entropy — bits of key in use decide the pass count, n does not
+contender              config                              n        ns/op      ns/elem      Melem/s       B/op   allocs  passes
+------------------------------------------------------------------------------------------------------------------------------
+std::sort_perm         e64/random                         1M     66937791       66.938         14.9          0        0     0.0
+radix_gather           e64/random                         1M     10280708       10.281         97.3          0        0     8.0
+radix_carry            e64/random                         1M      9247833        9.248        108.1          0        0     8.0
+radix_prehist          e64/random                         1M      9231791        9.232        108.3          0        0     8.0
+std::sort_perm         e32/random                         1M     67104292       67.104         14.9          0        0     0.0
+radix_gather           e32/random                         1M      5005292        5.005        199.8          0        0     4.0
+radix_carry            e32/random                         1M      4860959        4.861        205.7          0        0     4.0
+radix_prehist          e32/random                         1M      4806541        4.807        208.0          0        0     4.0
+std::sort_perm         e24/random                         1M     67645083       67.645         14.8          0        0     0.0
+radix_gather           e24/random                         1M      3698625        3.699        270.4          0        0     3.0
+radix_carry            e24/random                         1M      3793125        3.793        263.6          0        0     3.0
+radix_prehist          e24/random                         1M      3746250        3.746        266.9          0        0     3.0
+std::sort_perm         e8/random                          1M     31377583       31.378         31.9          0        0     0.0
+radix_gather           e8/random                          1M      1124250        1.124        889.5          0        0     1.0
+radix_carry            e8/random                          1M      1603500        1.603        623.6          0        0     1.0
+radix_prehist          e8/random                          1M      1617375        1.617        618.3          0        0     1.0
+std::sort_perm         eq/random                          1M      1164541        1.165        858.7          0        0     0.0
+radix_gather           eq/random                          1M       127750        0.128       7827.8          0        0     0.0
+radix_carry            eq/random                          1M       119375        0.119       8377.0          0        0     0.0
+radix_prehist          eq/random                          1M       120625        0.121       8290.2          0        0     0.0
+
+wrote results/entropy.csv (20 rows)
+sortlab — geometric (radix/SIMD) vs scalar (comparator) sort
+isa=neon vector_lanes=2 pointer=64b
+
+=== lanes — ORDER BY over 1..8 keys, in both matrix layouts
+contender              config                              n        ns/op      ns/elem      Melem/s       B/op   allocs  passes
+------------------------------------------------------------------------------------------------------------------------------
+std::sort_perm         1axis/row-major                    1M     77857208       77.857         12.8          0        0     0.0
+radix_gather           1axis/row-major                    1M     10768333       10.768         92.9          0        0     8.0
+radix_carry            1axis/row-major                    1M      9595208        9.595        104.2          0        0     8.0
+radix_prehist          1axis/row-major                    1M      9617084        9.617        104.0          0        0     8.0
+std::sort_perm         1axis/lane-major                   1M     66748208       66.748         15.0          0        0     0.0
+radix_gather           1axis/lane-major                   1M     10822459       10.822         92.4          0        0     8.0
+radix_carry            1axis/lane-major                   1M      9301750        9.302        107.5          0        0     8.0
+radix_prehist          1axis/lane-major                   1M      9266417        9.266        107.9          0        0     8.0
+std::sort_perm         2axis/row-major                    1M     91472334       91.472         10.9          0        0     0.0
+radix_gather           2axis/row-major                    1M     15201167       15.201         65.8          0        0     9.0
+radix_carry            2axis/row-major                    1M     12233292       12.233         81.7          0        0     9.0
+radix_prehist          2axis/row-major                    1M     13199917       13.200         75.8          0        0     9.0
+std::sort_perm         2axis/lane-major                   1M     87317375       87.317         11.5          0        0     0.0
+radix_gather           2axis/lane-major                   1M     12246875       12.247         81.7          0        0     9.0
+radix_carry            2axis/lane-major                   1M     11355584       11.356         88.1          0        0     9.0
+radix_prehist          2axis/lane-major                   1M     12012166       12.012         83.2          0        0     9.0
+std::sort_perm         4axis/row-major                    1M    108965958      108.966          9.2          0        0     0.0
+radix_gather           4axis/row-major                    1M     55625333       55.625         18.0          0        0    11.0
+radix_carry            4axis/row-major                    1M     24326750       24.327         41.1          0        0    11.0
+radix_prehist          4axis/row-major                    1M     29837625       29.838         33.5          0        0    11.0
+std::sort_perm         4axis/lane-major                   1M    130820375      130.820          7.6          0        0     0.0
+radix_gather           4axis/lane-major                   1M     22168000       22.168         45.1          0        0    11.0
+radix_carry            4axis/lane-major                   1M     17541250       17.541         57.0          0        0    11.0
+radix_prehist          4axis/lane-major                   1M     19739084       19.739         50.7          0        0    11.0
+std::sort_perm         8axis/row-major                    1M    119417333      119.417          8.4          0        0     0.0
+radix_gather           8axis/row-major                    1M     88241917       88.242         11.3          0        0    15.0
+radix_carry            8axis/row-major                    1M     50106333       50.106         20.0          0        0    15.0
+radix_prehist          8axis/row-major                    1M     72080667       72.081         13.9          0        0    15.0
+std::sort_perm         8axis/lane-major                   1M    125904584      125.905          7.9          0        0     0.0
+radix_gather           8axis/lane-major                   1M     30527958       30.528         32.8          0        0    15.0
+radix_carry            8axis/lane-major                   1M     27039250       27.039         37.0          0        0    15.0
+radix_prehist          8axis/lane-major                   1M     29909417       29.909         33.4          0        0    15.0
+
+wrote results/lanes.csv (32 rows)
+sortlab — geometric (radix/SIMD) vs scalar (comparator) sort
+isa=neon vector_lanes=2 pointer=64b
+
+=== payload — moved log n times by a comparator, or moved once by a gather
+contender              config                              n        ns/op      ns/elem      Melem/s       B/op   allocs  passes
+------------------------------------------------------------------------------------------------------------------------------
+gather_only            8B                                 1M       529459        0.529       1888.7          0        0     0.0
+radix_then_gather      8B                                 1M     10088500       10.088         99.1          0        0     0.0
+std::sort_rows         8B                                 1M     40115292       40.115         24.9          0        0     0.0
+gather_only            32B                                1M      2912709        2.913        343.3          0        0     0.0
+radix_then_gather      32B                                1M     12619792       12.620         79.2          0        0     0.0
+std::sort_rows         32B                                1M     43843583       43.844         22.8          0        0     0.0
+gather_only            128B                               1M     19736917       19.737         50.7          0        0     0.0
+radix_then_gather      128B                               1M     29146166       29.146         34.3          0        0     0.0
+std::sort_rows         128B                               1M     59774583       59.775         16.7          0        0     0.0
+
+wrote results/payload.csv (9 rows)
+sortlab — geometric (radix/SIMD) vs scalar (comparator) sort
+isa=neon vector_lanes=2 pointer=64b
+
+=== presortedness — pdqsort detects runs; a radix does not care
+contender              config                              n        ns/op      ns/elem      Melem/s       B/op   allocs  passes
+------------------------------------------------------------------------------------------------------------------------------
+std::sort_perm         random                             1M     66226625       66.227         15.1          0        0     0.0
+std::stable_perm       random                             1M     76417542       76.418         13.1    4000000        1     0.0
+radix_carry            random                             1M      9151791        9.152        109.3          0        0     8.0
+std::sort_perm         sorted                             1M      1225834        1.226        815.8          0        0     0.0
+std::stable_perm       sorted                             1M      7992208        7.992        125.1    4000000        1     0.0
+radix_carry            sorted                             1M      9076958        9.077        110.2          0        0     8.0
+std::sort_perm         reverse                            1M      1843459        1.843        542.5          0        0     0.0
+std::stable_perm       reverse                            1M     34490375       34.490         29.0    4000000        1     0.0
+radix_carry            reverse                            1M      9482834        9.483        105.5          0        0     8.0
+std::sort_perm         99pct                              1M      9380000        9.380        106.6          0        0     0.0
+std::stable_perm       99pct                              1M     15484791       15.485         64.6    4000000        1     0.0
+radix_carry            99pct                              1M      9357458        9.357        106.9          0        0     8.0
+
+wrote results/presort.csv (12 rows)
+sortlab — geometric (radix/SIMD) vs scalar (comparator) sort
+isa=neon vector_lanes=2 pointer=64b
+
+=== small n — below the radix floor, where the network lives
+contender              config                              n        ns/op      ns/elem      Melem/s       B/op   allocs  passes
+------------------------------------------------------------------------------------------------------------------------------
+std::sort_direct       e64/random                          8            6        0.783       1276.8          0        0     0.0
+bitonic_scalar         e64/random                          8           25        3.092        323.4          0        0     0.0
+bitonic_neon           e64/random                          8           11        1.414        707.2          0        0     0.0
+insertion_perm         e64/random                          8           10        1.241        805.8          0        0     0.0
+std::sort_perm         e64/random                          8           16        2.004        499.0          0        0     0.0
+radix_carry            e64/random                          8          679       84.849         11.8          0        0     0.0
+radix_carry_alloc      e64/random                          8          959      119.924          8.3        304       10     0.0
+std::sort_direct       e64/random                         16           26        1.628        614.4          0        0     0.0
+bitonic_scalar         e64/random                         16           92        5.778        173.1          0        0     0.0
+bitonic_neon           e64/random                         16           32        2.009        497.8          0        0     0.0
+insertion_perm         e64/random                         16           43        2.681        373.1          0        0     0.0
+std::sort_perm         e64/random                         16           61        3.840        260.4          0        0     0.0
+radix_carry            e64/random                         16          711       44.439         22.5          0        0     0.0
+radix_carry_alloc      e64/random                         16          995       62.210         16.1        472       10     0.0
+std::sort_direct       e64/random                         32           56        1.740        574.9          0        0     0.0
+bitonic_scalar         e64/random                         32          283        8.837        113.2          0        0     0.0
+bitonic_neon           e64/random                         32           84        2.632        379.9          0        0     0.0
+insertion_perm         e64/random                         32          154        4.814        207.7          0        0     0.0
+std::sort_perm         e64/random                         32          136        4.265        234.5          0        0     0.0
+radix_carry            e64/random                         32          806       25.180         39.7          0        0     0.0
+radix_carry_alloc      e64/random                         32         1100       34.360         29.1        808       10     0.0
+std::sort_direct       e64/random                         64          135        2.103        475.5          0        0     0.0
+bitonic_scalar         e64/random                         64          782       12.225         81.8          0        0     0.0
+bitonic_neon           e64/random                         64          226        3.539        282.6          0        0     0.0
+insertion_perm         e64/random                         64          611        9.548        104.7          0        0     0.0
+std::sort_perm         e64/random                         64          281        4.383        228.1          0        0     0.0
+radix_carry            e64/random                         64          997       15.574         64.2          0        0     0.0
+radix_carry_alloc      e64/random                         64         1321       20.640         48.4       1480       10     0.0
+std::sort_direct       e64/random                        128          322        2.514        397.8          0        0     0.0
+bitonic_scalar         e64/random                        128         2162       16.890         59.2          0        0     0.0
+bitonic_neon           e64/random                        128          558        4.357        229.5          0        0     0.0
+insertion_perm         e64/random                        128         2660       20.780         48.1          0        0     0.0
+std::sort_perm         e64/random                        128          691        5.397        185.3          0        0     0.0
+radix_carry            e64/random                        128         1438       11.233         89.0          0        0     0.0
+radix_carry_alloc      e64/random                        128         1785       13.949         71.7       2824       10     0.0
+std::sort_direct       e64/random                        256          846        3.304        302.6          0        0     0.0
+bitonic_scalar         e64/random                        256         5548       21.672         46.1          0        0     0.0
+bitonic_neon           e64/random                        256         1374        5.369        186.3          0        0     0.0
+insertion_perm         e64/random                        256         9375       36.622         27.3          0        0     0.0
+std::sort_perm         e64/random                        256         1753        6.848        146.0          0        0     0.0
+radix_carry            e64/random                        256         2135        8.341        119.9          0        0     0.0
+radix_carry_alloc      e64/random                        256         2472        9.656        103.6       5512       10     0.0
+std::sort_direct       e64/random                        512         2017        3.939        253.9          0        0     0.0
+bitonic_scalar         e64/random                        512        13590       26.544         37.7          0        0     0.0
+bitonic_neon           e64/random                        512         3477        6.791        147.2          0        0     0.0
+insertion_perm         e64/random                        512        38070       74.356         13.4          0        0     0.0
+std::sort_perm         e64/random                        512         4146        8.097        123.5          0        0     0.0
+radix_carry            e64/random                        512         3857        7.534        132.7          0        0     0.0
+radix_carry_alloc      e64/random                        512         4159        8.123        123.1      10888       10     0.0
+
+wrote results/smalln.csv (49 rows)
+sortlab — geometric (radix/SIMD) vs scalar (comparator) sort
+isa=neon vector_lanes=2 pointer=64b
+
+=== top-k — LIMIT is not a sort
+contender              config                              n        ns/op      ns/elem      Melem/s       B/op   allocs  passes
+------------------------------------------------------------------------------------------------------------------------------
+radix_carry_full       k=all                             10M     92031917        9.203        108.7          0        0     8.0
+std::sort_perm_full    k=all                             10M    946874417       94.687         10.6          0        0     0.0
+std::partial_sort      k=1                               10M     10023666        1.002        997.6          0        0     0.0
+radix_msd_topk         k=1                               10M     11570625        1.157        864.3          0        0     0.0
+std::partial_sort      k=10                              10M     10120000        1.012        988.1          0        0     0.0
+radix_msd_topk         k=10                              10M     11511209        1.151        868.7          0        0     0.0
+std::partial_sort      k=100                             10M     10131584        1.013        987.0          0        0     0.0
+radix_msd_topk         k=100                             10M     11608584        1.161        861.4          0        0     0.0
+std::partial_sort      k=1000                            10M     10622000        1.062        941.4          0        0     0.0
+radix_msd_topk         k=1000                            10M     11443542        1.144        873.9          0        0     0.0
+std::partial_sort      k=10000                           10M     18023500        1.802        554.8          0        0     0.0
+radix_msd_topk         k=10000                           10M     12173208        1.217        821.5          0        0     0.0
+
+wrote results/topk.csv (12 rows)
+sortlab — geometric (radix/SIMD) vs scalar (comparator) sort
+isa=neon vector_lanes=2 pointer=64b
+
+=== simd — the two steps the vector unit actually owns
+contender              config                              n        ns/op      ns/elem      Melem/s       B/op   allocs  passes
+------------------------------------------------------------------------------------------------------------------------------
+vary_novec             stride1                            1M       255500        0.256       3913.9          0        0     0.0
+vary_autovec           stride1                            1M        67417        0.067      14833.1          0        0     0.0
+vary_neon              stride1                            1M        64250        0.064      15564.2          0        0     0.0
+vary_novec             stride4                            1M       377542        0.378       2648.7          0        0     0.0
+vary_autovec           stride4                            1M       436583        0.437       2290.5          0        0     0.0
+vary_neon              stride4                            1M       405458        0.405       2466.3          0        0     0.0
+encode_novec           i64                                1M       243750        0.244       4102.6          0        0     0.0
+encode_neon            i64                                1M       118208        0.118       8459.7          0        0     0.0
+
+wrote results/simd.csv (8 rows)

@@ -1,0 +1,40 @@
+sortlab — geometric (radix/SIMD) vs scalar (comparator) sort
+isa=neon vector_lanes=2 pointer=64b
+
+=== lanes — ORDER BY over 1..8 keys, in both matrix layouts
+contender              config                              n        ns/op      ns/elem      Melem/s       B/op   allocs  passes
+------------------------------------------------------------------------------------------------------------------------------
+std::sort_perm         1axis/row-major                    1M     77857208       77.857         12.8          0        0     0.0
+radix_gather           1axis/row-major                    1M     10768333       10.768         92.9          0        0     8.0
+radix_carry            1axis/row-major                    1M      9595208        9.595        104.2          0        0     8.0
+radix_prehist          1axis/row-major                    1M      9617084        9.617        104.0          0        0     8.0
+std::sort_perm         1axis/lane-major                   1M     66748208       66.748         15.0          0        0     0.0
+radix_gather           1axis/lane-major                   1M     10822459       10.822         92.4          0        0     8.0
+radix_carry            1axis/lane-major                   1M      9301750        9.302        107.5          0        0     8.0
+radix_prehist          1axis/lane-major                   1M      9266417        9.266        107.9          0        0     8.0
+std::sort_perm         2axis/row-major                    1M     91472334       91.472         10.9          0        0     0.0
+radix_gather           2axis/row-major                    1M     15201167       15.201         65.8          0        0     9.0
+radix_carry            2axis/row-major                    1M     12233292       12.233         81.7          0        0     9.0
+radix_prehist          2axis/row-major                    1M     13199917       13.200         75.8          0        0     9.0
+std::sort_perm         2axis/lane-major                   1M     87317375       87.317         11.5          0        0     0.0
+radix_gather           2axis/lane-major                   1M     12246875       12.247         81.7          0        0     9.0
+radix_carry            2axis/lane-major                   1M     11355584       11.356         88.1          0        0     9.0
+radix_prehist          2axis/lane-major                   1M     12012166       12.012         83.2          0        0     9.0
+std::sort_perm         4axis/row-major                    1M    108965958      108.966          9.2          0        0     0.0
+radix_gather           4axis/row-major                    1M     55625333       55.625         18.0          0        0    11.0
+radix_carry            4axis/row-major                    1M     24326750       24.327         41.1          0        0    11.0
+radix_prehist          4axis/row-major                    1M     29837625       29.838         33.5          0        0    11.0
+std::sort_perm         4axis/lane-major                   1M    130820375      130.820          7.6          0        0     0.0
+radix_gather           4axis/lane-major                   1M     22168000       22.168         45.1          0        0    11.0
+radix_carry            4axis/lane-major                   1M     17541250       17.541         57.0          0        0    11.0
+radix_prehist          4axis/lane-major                   1M     19739084       19.739         50.7          0        0    11.0
+std::sort_perm         8axis/row-major                    1M    119417333      119.417          8.4          0        0     0.0
+radix_gather           8axis/row-major                    1M     88241917       88.242         11.3          0        0    15.0
+radix_carry            8axis/row-major                    1M     50106333       50.106         20.0          0        0    15.0
+radix_prehist          8axis/row-major                    1M     72080667       72.081         13.9          0        0    15.0
+std::sort_perm         8axis/lane-major                   1M    125904584      125.905          7.9          0        0     0.0
+radix_gather           8axis/lane-major                   1M     30527958       30.528         32.8          0        0    15.0
+radix_carry            8axis/lane-major                   1M     27039250       27.039         37.0          0        0    15.0
+radix_prehist          8axis/lane-major                   1M     29909417       29.909         33.4          0        0    15.0
+
+wrote results/lanes.csv (32 rows)

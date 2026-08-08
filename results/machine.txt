@@ -1,0 +1,10 @@
+date:     2026-08-08T13:42:41Z
+uname:    Darwin 24.6.0 arm64
+cpu:      Apple M4
+cores:    10 physical / 10 logical
+l1d:      131072
+l2:       16777216
+line:     128
+page:     16384
+memory:   17179869184
+compiler: Apple clang version 17.0.0 (clang-1700.0.13.3)

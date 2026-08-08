@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+title: "sortlab: geometric sorting vs per-unit comparison, measured"
+message: "If you reference these results, please cite this repository."
+type: software
+authors:
+  - name: "TETRA CA PBC"
+    website: "https://tetra-ca.com"
+repository-code: "https://github.com/tetra-ca/geometric-sort-lab"
+url: "https://tetra-ca.com"
+abstract: >-
+  A self-contained C++17 benchmark comparing radix (geometric) sorting against
+  comparator-based sorting across eight controlled sweeps: scale, key entropy,
+  lane count and row layout, presortedness, payload width, small-n behavior,
+  top-k selection, and SIMD contribution. Every sweep varies exactly one
+  parameter, and every result is reproducible with a single `make` on the
+  reader's own machine.
+keywords:
+  - sorting
+  - radix sort
+  - benchmark
+  - simd
+  - high-performance computing
+  - cpp
+license: Apache-2.0

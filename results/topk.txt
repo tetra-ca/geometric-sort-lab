@@ -1,0 +1,20 @@
+sortlab — geometric (radix/SIMD) vs scalar (comparator) sort
+isa=neon vector_lanes=2 pointer=64b
+
+=== top-k — LIMIT is not a sort
+contender              config                              n        ns/op      ns/elem      Melem/s       B/op   allocs  passes
+------------------------------------------------------------------------------------------------------------------------------
+radix_carry_full       k=all                             10M     92031917        9.203        108.7          0        0     8.0
+std::sort_perm_full    k=all                             10M    946874417       94.687         10.6          0        0     0.0
+std::partial_sort      k=1                               10M     10023666        1.002        997.6          0        0     0.0
+radix_msd_topk         k=1                               10M     11570625        1.157        864.3          0        0     0.0
+std::partial_sort      k=10                              10M     10120000        1.012        988.1          0        0     0.0
+radix_msd_topk         k=10                              10M     11511209        1.151        868.7          0        0     0.0
+std::partial_sort      k=100                             10M     10131584        1.013        987.0          0        0     0.0
+radix_msd_topk         k=100                             10M     11608584        1.161        861.4          0        0     0.0
+std::partial_sort      k=1000                            10M     10622000        1.062        941.4          0        0     0.0
+radix_msd_topk         k=1000                            10M     11443542        1.144        873.9          0        0     0.0
+std::partial_sort      k=10000                           10M     18023500        1.802        554.8          0        0     0.0
+radix_msd_topk         k=10000                           10M     12173208        1.217        821.5          0        0     0.0
+
+wrote results/topk.csv (12 rows)

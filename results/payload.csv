@@ -1,0 +1,10 @@
+bench,contender,config,n,axes,payload,ns_op,ns_elem,melem_s,bytes,allocs,passes,reps
+payload,gather_only,8B,1000000,1,8,529459.0,0.5295,1888.72,0,0,0.0,64
+payload,radix_then_gather,8B,1000000,1,8,10088500.0,10.0885,99.12,0,0,0.0,5
+payload,std::sort_rows,8B,1000000,1,8,40115292.0,40.1153,24.93,0,0,0.0,3
+payload,gather_only,32B,1000000,1,32,2912709.0,2.9127,343.32,0,0,0.0,14
+payload,radix_then_gather,32B,1000000,1,32,12619792.0,12.6198,79.24,0,0,0.0,4
+payload,std::sort_rows,32B,1000000,1,32,43843583.0,43.8436,22.81,0,0,0.0,3
+payload,gather_only,128B,1000000,1,128,19736917.0,19.7369,50.67,0,0,0.0,3
+payload,radix_then_gather,128B,1000000,1,128,29146166.0,29.1462,34.31,0,0,0.0,3
+payload,std::sort_rows,128B,1000000,1,128,59774583.0,59.7746,16.73,0,0,0.0,3

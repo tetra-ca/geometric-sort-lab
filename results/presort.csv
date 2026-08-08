@@ -1,0 +1,13 @@
+bench,contender,config,n,axes,payload,ns_op,ns_elem,melem_s,bytes,allocs,passes,reps
+presort,std::sort_perm,random,1000000,1,0,66226625.0,66.2266,15.10,0,0,0.0,3
+presort,std::stable_perm,random,1000000,1,0,76417542.0,76.4175,13.09,4000000,1,0.0,3
+presort,radix_carry,random,1000000,1,0,9151791.0,9.1518,109.27,0,0,8.0,5
+presort,std::sort_perm,sorted,1000000,1,0,1225834.0,1.2258,815.77,0,0,0.0,47
+presort,std::stable_perm,sorted,1000000,1,0,7992208.0,7.9922,125.12,4000000,1,0.0,7
+presort,radix_carry,sorted,1000000,1,0,9076958.0,9.0770,110.17,0,0,8.0,5
+presort,std::sort_perm,reverse,1000000,1,0,1843459.0,1.8435,542.46,0,0,0.0,32
+presort,std::stable_perm,reverse,1000000,1,0,34490375.0,34.4904,28.99,4000000,1,0.0,3
+presort,radix_carry,reverse,1000000,1,0,9482834.0,9.4828,105.45,0,0,8.0,5
+presort,std::sort_perm,99pct,1000000,1,0,9380000.0,9.3800,106.61,0,0,0.0,5
+presort,std::stable_perm,99pct,1000000,1,0,15484791.0,15.4848,64.58,4000000,1,0.0,3
+presort,radix_carry,99pct,1000000,1,0,9357458.0,9.3575,106.87,0,0,8.0,5

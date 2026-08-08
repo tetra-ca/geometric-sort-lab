@@ -1,0 +1,9 @@
+bench,contender,config,n,axes,payload,ns_op,ns_elem,melem_s,bytes,allocs,passes,reps
+simd,vary_novec,stride1,1000000,1,0,255500.0,0.2555,3913.89,0,0,0.0,191
+simd,vary_autovec,stride1,1000000,1,0,67417.0,0.0674,14833.05,0,0,0.0,673
+simd,vary_neon,stride1,1000000,1,0,64250.0,0.0643,15564.20,0,0,0.0,773
+simd,vary_novec,stride4,1000000,1,0,377542.0,0.3775,2648.71,0,0,0.0,100
+simd,vary_autovec,stride4,1000000,1,0,436583.0,0.4366,2290.52,0,0,0.0,133
+simd,vary_neon,stride4,1000000,1,0,405458.0,0.4055,2466.35,0,0,0.0,133
+simd,encode_novec,i64,1000000,1,0,243750.0,0.2437,4102.56,0,0,0.0,117
+simd,encode_neon,i64,1000000,1,0,118208.0,0.1182,8459.66,0,0,0.0,392
